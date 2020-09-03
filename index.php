@@ -90,9 +90,9 @@ if ( sizeof($request_array['events']) > 0 ) {
 
 echo "OK";
 
-function handleEvent($reply_token){
+function handleEvent($token){
     $data = [
-        'replyToken' => $reply_token,
+        'replyToken' => $token,
         // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
         'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
     ];
@@ -104,9 +104,9 @@ function handleEvent($reply_token){
     
 }
 
-function handleEvent2($reply_token){
+function handleEvent2($token){
     $data = [
-        'replyToken' => $reply_token,
+        'replyToken' => $token,
         // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
         'messages' => [['type' => 'text', 'text' => "Keyword no Correct!! Check Pls" ]]
     ];
