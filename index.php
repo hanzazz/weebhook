@@ -36,10 +36,10 @@ if ( sizeof($request_array['events']) > 0 ) {
         $text=$text_S;
 
       
-        if($text_S == "EU-1" || $text_S == "AU-1" || $text_S == "GU-1" || $text_S == "NU-1" || $text_S == "UCAD-1" || $text_S == "UCHF-1" || $text_S == "UJPY-1" ||
-           $text_S == "eu-1" || $text_S == "au-1" || $text_S == "gu-1" || $text_S == "nu-1" || $text_S == "ucad-1" || $text_S == "uchf-1" || $text_S == "ujpy-1" ||
-           $text_S == "EU-2" || $text_S == "AU-2" || $text_S == "GU-2" || $text_S == "NU-2" || $text_S == "UCAD-2" || $text_S == "UCHF-2" || $text_S == "UJPY-2" ||
-           $text_S == "eu-2" || $text_S == "au-2" || $text_S == "gu-2" || $text_S == "nu-2" || $text_S == "ucad-2" || $text_S == "uchf-2" || $text_S == "ujpy-2" ){
+        if($text_S == 'EU-1' || $text_S == 'AU-1' || $text_S == 'GU-1' || $text_S == 'NU-1' || $text_S == 'UCAD-1' || $text_S == 'UCHF-1' || $text_S == 'UJPY-1' ||
+           $text_S == 'eu-1' || $text_S == 'au-1' || $text_S == 'gu-1' || $text_S == 'nu-1' || $text_S == 'ucad-1' || $text_S == 'uchf-1' || $text_S == 'ujpy-1' ||
+           $text_S == 'EU-2' || $text_S == 'AU-2' || $text_S == 'GU-2' || $text_S == 'NU-2' || $text_S == 'UCAD-2' || $text_S == 'UCHF-2' || $text_S == 'UJPY-2' ||
+           $text_S == 'eu-2' || $text_S == 'au-2' || $text_S == 'gu-2' || $text_S == 'nu-2' || $text_S == 'ucad-2' || $text_S == 'uchf-2' || $text_S == 'ujpy-2' ){
         
             $x = 0;
             /**************************************************************************** */
