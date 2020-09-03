@@ -69,7 +69,7 @@ if ( sizeof($request_array['events']) > 0 ) {
                 }
                 else $x =1;
             }
-            if(x==1){
+            if($x==1){
                 if($userID != $UDI){
                     $sql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
                     if ($conn->query($sql) === TRUE) {
