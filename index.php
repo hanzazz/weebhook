@@ -39,6 +39,17 @@ if ( sizeof($request_array['events']) > 0 ) {
         $text_S = $event['message']['text'];
         $text=$text_S;
         
+        $data = [
+            'replyToken' => $token,
+            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+            'messages' => [['type' => 'text', 'text' => "Keyword no Correct!! Check Pls" ]]
+        ];
+        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+        echo "Result: ".$send_result."\r\n";
+      
         if($text_S == "EU-1" || $text_S == "AU-1" || $text_S == "GU-1" || $text_S == "NU-1" || $text_S == "UCAD-1" || $text_S == "UCHF-1" || $text_S == "UJPY-1" ||
            $text_S == "eu-1" || $text_S == "au-1" || $text_S == "gu-1" || $text_S == "nu-1" || $text_S == "ucad-1" || $text_S == "uchf-1" || $text_S == "ujpy-1" ||
            $text_S == "EU-2" || $text_S == "AU-2" || $text_S == "GU-2" || $text_S == "NU-2" || $text_S == "UCAD-2" || $text_S == "UCHF-2" || $text_S == "UJPY-2" ||
