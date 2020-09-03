@@ -1,7 +1,7 @@
 <?php
 
 $servername = "localhost";
-$username = "rood";
+$username = "root";
 $password = "";
 $dbname = "LINEIN";
 
