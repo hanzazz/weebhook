@@ -7,6 +7,11 @@ $dbname = "LINEIN";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
 
 $API_URL = 'https://api.line.me/v2/bot/message';
 $ACCESS_TOKEN = 'XVkmOR4aT771B9CnIdxvdGmlOtXQSijnvLZ+T7GC5Hd8cVC8nKslvKPBTUs2M6vI5WhhF92i6S1NvR/ZY7IARrfIWCCZwo+ZYk6bzTnL9+ilJOWBlQyPXUvlZvgR5eE3a2KZ+C+hhDLn7bbiDVUJQgdB04t89/1O/w1cDnyilFU='; 
@@ -33,17 +38,6 @@ if ( sizeof($request_array['events']) > 0 ) {
         $text_S = $event['message']['text'];
         $text=$text_S;
         
-        $data = [
-            'replyToken' => $reply_token,
-             //'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  
-            'messages' => [['type' => 'text', 'text' => $text ]]
-        ];
-        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-        echo "Result: ".$send_result."\r\n";
-      
         if($text_S == "EU-1" || $text_S == "AU-1" || $text_S == "GU-1" || $text_S == "NU-1" || $text_S == "UCAD-1" || $text_S == "UCHF-1" || $text_S == "UJPY-1" ||
            $text_S == "eu-1" || $text_S == "au-1" || $text_S == "gu-1" || $text_S == "nu-1" || $text_S == "ucad-1" || $text_S == "uchf-1" || $text_S == "ujpy-1" ||
            $text_S == "EU-2" || $text_S == "AU-2" || $text_S == "GU-2" || $text_S == "NU-2" || $text_S == "UCAD-2" || $text_S == "UCHF-2" || $text_S == "UJPY-2" ||
@@ -58,8 +52,9 @@ if ( sizeof($request_array['events']) > 0 ) {
             
             while($row = mysqli_fetch_assoc($result)) {
                 
+                //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $row["UserID"];
-                $GROUPID = $row["GroupID"];
+                $GROUPID = $result["GroupID"];
                 if($userID == $UDI){
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
                     if ($conn->query($sql) === TRUE) {
@@ -74,7 +69,7 @@ if ( sizeof($request_array['events']) > 0 ) {
                 }
                 else $x =1;
             }
-            if($x==1){
+            if(x==1){
                 if($userID != $UDI){
                     $sql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
                     if ($conn->query($sql) === TRUE) {
@@ -88,12 +83,40 @@ if ( sizeof($request_array['events']) > 0 ) {
             }
             
         }
+        else{handleEvent2($reply_token);}
         
     }
 }
 
 echo "OK";
 
+function handleEvent($reply_token){
+    $data = [
+        'replyToken' => $reply_token,
+        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+        'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
+    ];
+    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+    echo "Result: ".$send_result."\r\n";
+    
+}
+
+function handleEvent2($reply_token){
+    $data = [
+        'replyToken' => $reply_token,
+        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+        'messages' => [['type' => 'text', 'text' => "Keyword no Correct!! Check Pls" ]]
+    ];
+    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+    echo "Result: ".$send_result."\r\n";
+    
+}
 
 function send_reply_message($url, $post_header, $post_body)
 {
