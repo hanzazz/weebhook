@@ -24,8 +24,9 @@ if ( sizeof($request_array['events']) > 0 ) {
         $userID = $event['source']['userId'];
         $groupID = $event['source']['groupId'];
         $timestamp = $event['timestamp'];
-        $text_S = $event['message']['text'];
-        $text=$text_S;
+        //$text_S = $event['message']['text'];
+        $text = $event['message']['text'];
+        //$text=$text_S;
         
         $data = [
             'replyToken' => $token,
