@@ -20,7 +20,7 @@ if ( sizeof($request_array['events']) > 0 ) {
         $reply_message = '';
         $reply_token = $event['replyToken'];
 
-        $text = $event['message']['text'];
+        $text = "XXX"; //$event['message']['text'];
         $data = [
             'replyToken' => $reply_token,
             // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
@@ -45,7 +45,7 @@ function send_reply_message($url, $post_header, $post_body)
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $post_header);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "cccc");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     $result = curl_exec($ch);
     curl_close($ch);
