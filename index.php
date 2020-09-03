@@ -29,7 +29,7 @@ if ( sizeof($request_array['events']) > 0 ) {
         //$text=$text_S;
         
         $data = [
-            'replyToken' => $token,
+            'replyToken' => $reply_token ,
              //'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  
             'messages' => [['type' => 'text', 'text' => $text_S ]]
         ];
