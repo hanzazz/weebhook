@@ -7,10 +7,7 @@ $dbname = "LINEIN";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+
 
 
 $API_URL = 'https://api.line.me/v2/bot/message';
@@ -69,7 +66,16 @@ if ( sizeof($request_array['events']) > 0 ) {
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
                     if ($conn->query($sql) === TRUE) {
                         echo "UserID: ".$userID."  updated successfully";
-                        handleEvent($reply_token);
+                        $data = [
+                            'replyToken' => $reply_token,
+                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                            'messages' => [['type' => 'text', 'text' => $text ]]
+                        ];
+                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                        echo "Result: ".$send_result."\r\n";
                     } else {
                         echo "UserID: ".$userID."  updated Error" . $conn->error;
                     }
@@ -84,7 +90,16 @@ if ( sizeof($request_array['events']) > 0 ) {
                     $sql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
                     if ($conn->query($sql) === TRUE) {
                         echo "New UserID: ".$userID."New record created successfully";
-                        handleEvent($reply_token);
+                        $data = [
+                            'replyToken' => $reply_token,
+                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                            'messages' => [['type' => 'text', 'text' => $text ]]
+                        ];
+                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                        echo "Result: ".$send_result."\r\n";
                     } else {
                         echo "New UserID: ".$userID."New record created Error". $conn->error;
                     }
@@ -94,16 +109,16 @@ if ( sizeof($request_array['events']) > 0 ) {
             
         }
         else{
-        $data = [
-            'replyToken' => $reply_token,
-            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-            'messages' => [['type' => 'text', 'text' => $text ]]
-        ];
-        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+          $data = [
+              'replyToken' => $reply_token,
+              // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+              'messages' => [['type' => 'text', 'text' => $text ]]
+          ];
+          $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+          $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
-        echo "Result: ".$send_result."\r\n";
+          echo "Result: ".$send_result."\r\n";
         }
         
     }
@@ -111,33 +126,6 @@ if ( sizeof($request_array['events']) > 0 ) {
 
 echo "OK";
 
-function handleEvent($token){
-    $data = [
-        'replyToken' => $token,
-        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-        'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
-    ];
-    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-    echo "Result: ".$send_result."\r\n";
-    
-}
-
-function handleEvent2($token){
-    $data = [
-        'replyToken' => $token,
-        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-        'messages' => [['type' => 'text', 'text' => "Keyword no Correct!! Check Pls" ]]
-    ];
-    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-    echo "Result: ".$send_result."\r\n";
-    
-}
 
 function send_reply_message($url, $post_header, $post_body)
 {
