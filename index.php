@@ -53,37 +53,20 @@ if ( sizeof($request_array['events']) > 0 ) {
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $result[$i]["UserID"];
                 $GROUPID = $result[$i]["GroupID"];
-                
-                $data = [
-                    'replyToken' => $reply_token,
-                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                    'messages' => [['type' => 'text', 'text' => "TEST " ]]
-                ];
-                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                echo "Result: ".$send_result."\r\n";
-                
                 if($userID == $UDI){
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
-                    
-                    if ($conn->query($sql) === TRUE) {
-                        echo "UserID: ".$userID."  updated successfully";
-                        $data = [
-                            'replyToken' => $reply_token,
-                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                            'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
-                        ];
-                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+                    $data = [
+                        'replyToken' => $reply_token,
+                        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                        'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
+                    ];
+                    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+                    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
-                        echo "Result: ".$send_result."\r\n";
-                    } else {
-                        echo "UserID: ".$userID."  updated Error" . $conn->error;
-                    }
-                    
+                    echo "Result: ".$send_result."\r\n";
+
                     $x =0;
                     break;
                 }
