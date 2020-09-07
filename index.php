@@ -47,7 +47,16 @@ if ( sizeof($request_array['events']) > 0 ) {
             $result = $conn->query($sql);
 
             for ($i = 0; $i < count($result); $i++) {
-                
+                $data = [
+                    'replyToken' => $reply_token,
+                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                    'messages' => [['type' => 'text', 'text' => count($result) ]]
+                ];
+                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                echo "Result: ".$send_result."\r\n";
                 //*****************************************************************************
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $result[$i]["UserID"];
