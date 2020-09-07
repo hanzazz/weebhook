@@ -70,20 +70,11 @@ if ( sizeof($request_array['events']) > 0 ) {
                     $UDI = $row["UserID"];
                     $GROUPID = $row["GroupID"];
 
-                    $data = [
-                        'replyToken' => $reply_token,
-                        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                        'messages' => [['type' => 'text', 'text' => $UDI." ".$GROUPID]]
-                    ];
-                    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                    echo "Result: ".$send_result."\r\n";
+                   
 
                     if($userID == $UDI){
                         //*************************************************************************** */
-                        $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID'";
+                        $sql = " UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID' ";
                         if ($conn->query($sql) === TRUE) {
                             echo "New record created successfully";
                             $data = [
