@@ -66,8 +66,8 @@ if ( sizeof($request_array['events']) > 0 ) {
                 
                 //*****************************************************************************
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
-                $UDI = $result[$i]["UserID"];
-                $GROUPID = $result[$i]["GroupID"];
+                $UDI = $querysql[$i]["UserID"];
+                $GROUPID = $querysql[$i]["GroupID"];
                 if($userID == $UDI){
                     //*************************************************************************** */
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
