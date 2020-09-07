@@ -6,8 +6,7 @@ $password = "2bkjcJHPBS";
 $dbname = "sql12363661";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+$conn = mysql_connect($servername, $username, $password, $dbname);
 
 
 $API_URL = 'https://api.line.me/v2/bot/message';
