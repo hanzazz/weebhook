@@ -50,11 +50,28 @@ if ( sizeof($request_array['events']) > 0 ) {
             //if (err) throw err;
             //Select all customers and return the result object:
             
-            $sql = "SELECT * FROM log";
-            $result = $conn->query($sql);
+            $querysql = "SELECT * FROM log";
             
             //*************************************************************************** */
-            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', '3','4','5')" ;
+            // Perform query
+            if ($result = $conn -> query($querysql)) {
+              echo "Returned rows are: " . $result -> num_rows;
+              // Free result set
+              $data = [
+                  'replyToken' => $reply_token,
+                  // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                  'messages' => [['type' => 'text', 'text' => "Returned rows are: " . $result -> num_rows ]]
+              ];
+              $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+              $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+              echo "Result: ".$send_result."\r\n";
+              
+              $result -> free_result();
+            }
+          /*
+           // $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', '3','4','5')" ;
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
                 $data = [
@@ -80,7 +97,7 @@ if ( sizeof($request_array['events']) > 0 ) {
 
                 echo "Result: ".$send_result."\r\n";
             }
-
+*/
             /**************************************************************************** */
             for ($i = 0; $i < count($result); $i++) {
                 
