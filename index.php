@@ -45,7 +45,7 @@ if ( sizeof($request_array['events']) > 0 ) {
             //Select all customers and return the result object:
             $sql = "SELECT * FROM log";
             $result = $conn->query($sql);
-            $sql = "INSERT INTO log (Text) VALUES ('$text') WHERE UserID='U41f193fcda59130f83cc2cc16e4929e9' AND Account='60038527'" ;
+
             for ($i = 0; $i < count($result); $i++) {
                 
                 //*****************************************************************************
