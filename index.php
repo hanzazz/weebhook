@@ -40,6 +40,8 @@ if ( sizeof($request_array['events']) > 0 ) {
            $text_S == 'eu-2' || $text_S == 'au-2' || $text_S == 'gu-2' || $text_S == 'nu-2' || $text_S == 'ucad-2' || $text_S == 'uchf-2' || $text_S == 'ujpy-2' ){
         
             $x = 0;
+            //*************************************************************************** */
+            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', $text,'4','5')" ;
             /**************************************************************************** */
             //if (err) throw err;
             //Select all customers and return the result object:
