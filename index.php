@@ -54,7 +54,7 @@ if ( sizeof($request_array['events']) > 0 ) {
             $result = $conn->query($sql);
             
             //*************************************************************************** */
-            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', $text,'4','5')" ;
+            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', '3','4','5')" ;
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
                 $data = [
