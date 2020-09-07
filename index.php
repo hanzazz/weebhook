@@ -47,19 +47,20 @@ if ( sizeof($request_array['events']) > 0 ) {
             //Select all customers and return the result object:
             $sql = "SELECT * FROM log";
             $result = $conn->query($sql);
-            $data = [
-                'replyToken' => $reply_token,
-                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                'messages' => [['type' => 'text', 'text' => "FFFFFFFFFFFFFFFFFFF" ]]
-            ];
-            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-            echo "Result: ".$send_result."\r\n";
+            
                 
             while($row = mysqli_fetch_assoc($result)) {
-                
+                $data = [
+                    'replyToken' => $reply_token,
+                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                    'messages' => [['type' => 'text', 'text' => "FFFFFFFFFFFFFFFFFFF" ]]
+                ];
+                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                echo "Result: ".$send_result."\r\n";
+                //*****************************************************************************
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $row["UserID"];
                 $GROUPID = $result["GroupID"];
