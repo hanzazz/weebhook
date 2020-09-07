@@ -41,10 +41,11 @@ if ( sizeof($request_array['events']) > 0 ) {
         
             $x = 0;
             //*************************************************************************** */
-            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', $text,'4','5')" ;
+            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', '3','4','5')" ;
             /**************************************************************************** */
             //if (err) throw err;
             //Select all customers and return the result object:
+            /*
             $sql = "SELECT * FROM log";
             $result = $conn->query($sql);
             
@@ -95,7 +96,7 @@ if ( sizeof($request_array['events']) > 0 ) {
                     
                 }
             }
-            
+            */
         }
         else{
           $data = [
