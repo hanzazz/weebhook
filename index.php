@@ -55,7 +55,7 @@ if ( sizeof($request_array['events']) > 0 ) {
             //*************************************************************************** */
             // Perform query
             $result = $conn -> query($querysql)
-            if ($result) {
+            if ($result === TRUE) {
               //echo "Returned rows are: " . $result -> num_rows;
               // Free result set
               $rowsql = $result -> num_rows;
