@@ -53,43 +53,41 @@ if ( sizeof($request_array['events']) > 0 ) {
             $sql = "SELECT * FROM log";
             $result = $conn->query($sql);
             
-            
+            //*************************************************************************** */
+            $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', $text,'4','5')" ;
+            if ($conn->query($sql) === TRUE) {
+                echo "New record created successfully";
+                $data = [
+                    'replyToken' => $reply_token,
+                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                    'messages' => [['type' => 'text', 'text' => "success" ]]
+                ];
+                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                echo "Result: ".$send_result."\r\n";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+                $data = [
+                    'replyToken' => $reply_token,
+                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                    'messages' => [['type' => 'text', 'text' => "Error: " . $sql . "<br>" . $conn->error ]]
+                ];
+                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                echo "Result: ".$send_result."\r\n";
+            }
+
+            /**************************************************************************** */
             for ($i = 0; $i < count($result); $i++) {
                 
                 //*****************************************************************************
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $result[$i]["UserID"];
                 $GROUPID = $result[$i]["GroupID"];
-                //*************************************************************************** */
-                $sql = "INSERT INTO log (UserID, Account, Text,Timestamp,GroupID) VALUES ('1','2', '3','4','5')" ;
-                //$sql = "UPDATE log SET  Text='ttt' WHERE UserID='$userID' AND GroupID='$groupID'";
-                if ($conn->query($sql) === TRUE) {
-                    echo "New record created successfully";
-                    $data = [
-                        'replyToken' => $reply_token,
-                        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                        'messages' => [['type' => 'text', 'text' => "success" ]]
-                    ];
-                    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                    echo "Result: ".$send_result."\r\n";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                    $data = [
-                        'replyToken' => $reply_token,
-                        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                        'messages' => [['type' => 'text', 'text' => "Error: " . $sql . "<br>" . $conn->error ]]
-                    ];
-                    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                    echo "Result: ".$send_result."\r\n";
-                }
-
-                /**************************************************************************** */
                 if($userID == $UDI){
                     
                     
