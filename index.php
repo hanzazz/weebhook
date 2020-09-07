@@ -54,14 +54,23 @@ if ( sizeof($request_array['events']) > 0 ) {
             
             //*************************************************************************** */
             // Perform query
-            
-            if ($result = $conn -> query($querysql)) {
+            if ($result = mysqli_query($conn, $querysql)) {
               //echo "Returned rows are: " . $result -> num_rows;
               // Free result set
               $rowsql = $result -> num_rows;
               
 
               /**************************************************************************** */
+              $data = [
+                  'replyToken' => $reply_token,
+                  // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                  'messages' => [['type' => 'text', 'text' => $rowsql ]]
+              ];
+              $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+              $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+              echo "Result: ".$send_result."\r\n";
               
               if($rowsql > 0){
                 while($row = mysqli_fetch_array($result)){
@@ -69,8 +78,8 @@ if ( sizeof($request_array['events']) > 0 ) {
                 
                     //*****************************************************************************
                     //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
-                    $UDI = $row[$i]["UserID"];
-                    $GROUPID = $row[$i]["GroupID"];
+                    $UDI = $row[$rowsql]["UserID"];
+                    $GROUPID = $row[$rowsql]["GroupID"];
 
                     $data = [
                         'replyToken' => $reply_token,
