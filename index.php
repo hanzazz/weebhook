@@ -67,8 +67,8 @@ if ( sizeof($request_array['events']) > 0 ) {
                 
                     //*****************************************************************************
                     //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
-                    $UDI = $row[$rowsql]["UserID"];
-                    $GROUPID = $row[$rowsql]["GroupID"];
+                    $UDI = $row["UserID"];
+                    $GROUPID = $row["GroupID"];
 
                     $data = [
                         'replyToken' => $reply_token,
