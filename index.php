@@ -45,16 +45,7 @@ if ( sizeof($request_array['events']) > 0 ) {
             //Select all customers and return the result object:
             $sql = "SELECT * FROM log";
             $result = $conn->query($sql);
-            $data = [
-                'replyToken' => $reply_token,
-                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                'messages' => [['type' => 'text', 'text' => count($result) ]]
-            ];
-            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-            echo "Result: ".$send_result."\r\n";
+            
             
             for ($i = 0; $i < count($result); $i++) {
                 
@@ -62,9 +53,20 @@ if ( sizeof($request_array['events']) > 0 ) {
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
                 $UDI = $result[$i]["UserID"];
                 $GROUPID = $result[$i]["GroupID"];
+                
+                $data = [
+                    'replyToken' => $reply_token,
+                    // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                    'messages' => [['type' => 'text', 'text' => $UDI ]]
+                ];
+                $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                echo "Result: ".$send_result."\r\n";
+                
                 if($userID == $UDI){
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
-                    
                     
                     if ($conn->query($sql) === TRUE) {
                         echo "UserID: ".$userID."  updated successfully";
