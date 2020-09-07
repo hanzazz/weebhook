@@ -59,84 +59,88 @@ if ( sizeof($request_array['events']) > 0 ) {
               //echo "Returned rows are: " . $result -> num_rows;
               // Free result set
               $rowsql = $result -> num_rows;
-              $result -> free_result();
-            }
-            $data = [
-                'replyToken' => $reply_token,
-                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]
-                'messages' => [['type' => 'text', 'text' => $text_S ]]
-            ];
-            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-            echo "Result: ".$send_result."\r\n";
-            /**************************************************************************** */
-            for ($i = 0; $i < $rowsql; $i++) {
-                
-                //*****************************************************************************
-                //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
-                $UDI = $result[$i]["UserID"];
-                $GROUPID = $result[$i]["GroupID"];
               
-                
+
+              /**************************************************************************** */
               
-                if($userID == $UDI){
-                    //*************************************************************************** */
-                    $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID'";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "New record created successfully";
-                        $data = [
-                            'replyToken' => $reply_token,
-                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                            'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
-                        ];
-                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                        echo "Result: ".$send_result."\r\n";
-                    } else {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
-                        $data = [
-                            'replyToken' => $reply_token,
-                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                            'messages' => [['type' => 'text', 'text' => "Error: " . $sql . "<br>" . $conn->error ]]
-                        ];
-                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                        echo "Result: ".$send_result."\r\n";
-                    }
-                    /**************************************************************************** */
-                    $x =0;
-                    break;
-                }
-                else $x =1;
-            }
-            if($x==1){
-                if($userID != $UDI){
-                    $mysql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
-                    if ($conn->query($sql) === TRUE) {
-                        echo "New UserID: ".$userID."New record created successfully";
-                        $data = [
-                            'replyToken' => $reply_token,
-                            // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                            'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
-                        ];
-                        $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-                        $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
-
-                        echo "Result: ".$send_result."\r\n";
-                    } else {
-                        echo "New UserID: ".$userID."New record created Error". $conn->error;
-                    }
+              if($rowsql > 0){
+                while($row = mysqli_fetch_array($result)){
                     
+                
+                    //*****************************************************************************
+                    //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
+                    $UDI = $row[$i]["UserID"];
+                    $GROUPID = $row[$i]["GroupID"];
+
+                    $data = [
+                        'replyToken' => $reply_token,
+                        // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                        'messages' => [['type' => 'text', 'text' => $UDI." ".$GROUPID]]
+                    ];
+                    $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                    $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                    echo "Result: ".$send_result."\r\n";
+
+                    if($userID == $UDI){
+                        //*************************************************************************** */
+                        $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID'";
+                        if ($conn->query($sql) === TRUE) {
+                            echo "New record created successfully";
+                            $data = [
+                                'replyToken' => $reply_token,
+                                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                                'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
+                            ];
+                            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                            echo "Result: ".$send_result."\r\n";
+                        } else {
+                            echo "Error: " . $sql . "<br>" . $conn->error;
+                            $data = [
+                                'replyToken' => $reply_token,
+                                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                                'messages' => [['type' => 'text', 'text' => "Error: " . $sql . "<br>" . $conn->error ]]
+                            ];
+                            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                            echo "Result: ".$send_result."\r\n";
+                        }
+                        /**************************************************************************** */
+                        $x =0;
+                        break;
+                    }
+                    else $x =1;
                 }
+                if($x==1){
+                    if($userID != $UDI){
+                        $mysql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
+                        if ($conn->query($sql) === TRUE) {
+                            echo "New UserID: ".$userID."New record created successfully";
+                            $data = [
+                                'replyToken' => $reply_token,
+                                // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
+                                'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
+                            ];
+                            $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+                            $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
+
+                            echo "Result: ".$send_result."\r\n";
+                        } else {
+                            echo "New UserID: ".$userID."New record created Error". $conn->error;
+                        }
+
+                    }
+                }
+              }
+            $result -> free_result();
             }
-            
         }
         else{
           $data = [
