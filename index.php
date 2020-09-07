@@ -54,7 +54,8 @@ if ( sizeof($request_array['events']) > 0 ) {
             
             //*************************************************************************** */
             // Perform query
-            if ($result = $conn -> query($querysql)) {
+            $result = $conn -> query($querysql)
+            if ($result) {
               //echo "Returned rows are: " . $result -> num_rows;
               // Free result set
               $rowsql = $result -> num_rows;
@@ -66,8 +67,8 @@ if ( sizeof($request_array['events']) > 0 ) {
                 
                 //*****************************************************************************
                 //console.log(`A JavaScript type is: ${result[_ID]["UserID"]}`)
-                $UDI = $querysql[$i]["UserID"];
-                $GROUPID = $querysql[$i]["GroupID"];
+                $UDI = $result[$i]["UserID"];
+                $GROUPID = $result[$i]["GroupID"];
                 if($userID == $UDI){
                     //*************************************************************************** */
                     $sql = "UPDATE log SET  Text='$text' WHERE UserID='$userID' AND GroupID='$groupID'";
