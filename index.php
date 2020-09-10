@@ -108,13 +108,13 @@ if ( sizeof($request_array['events']) > 0 ) {
                 }
                 if($x==1){
                     if($userID != $UDI){
-                        $mysql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
+                        $sql = "INSERT INTO log (UserID, Text, Timestamp, GroupID) VALUES ('$userID','$text', '$timestamp','$groupID')" ;
                         if ($conn->query($sql) === TRUE) {
                             echo "New UserID: ".$userID."New record created successfully";
                             $data = [
                                 'replyToken' => $reply_token,
                                 // 'messages' => [['type' => 'text', 'text' => json_encode($request_array) ]]  Debug Detail message
-                                'messages' => [['type' => 'text', 'text' => "wait pls!!" ]]
+                                'messages' => [['type' => 'text', 'text' => "insert success!!" ]]
                             ];
                             $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
