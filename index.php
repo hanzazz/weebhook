@@ -1,13 +1,17 @@
 <?php
 
-$servername = "localhost";
-$username = "rebatetr_dashboard";
-$password = "rebate1234";
-$dbname = "rebatetr_dashboard";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+$dbhost = 'localhost';
+$dbport = '3306';
+$dbname = 'rebatetr_dashboard';
+$username = 'rebatetr_dashboard';
+$password = 'rebate1234';
+try {
+        $conn = new PDO("mysql:host=$dbhost;port=$dbport;dbname=$dbname", $username, $password);
+} catch (PDOException $e) {
+        print "Error!: " . $e->getMessage() . "
+";
+ 
 
 // Check connection
 if ($conn->connect_error) {
