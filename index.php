@@ -1,6 +1,6 @@
 <?php
 
-$servername = "localhost:3306";
+$servername = "localhost";
 $username = "rebatetr_dashboard";
 $password = "rebate1234";
 $dbname = "rebatetr_dashboard";
