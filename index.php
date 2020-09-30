@@ -1,9 +1,9 @@
 <?php
 
-$servername = "fdb29.awardspace.net";
-$username = "3571483_linein";
-$password = "log987878789";
-$dbname = "3571483_linein";
+$servername = "localhost";
+$username = "rebatetr_dashboard";
+$password = "rebate1234";
+$dbname = "rebatetr_dashboard";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
